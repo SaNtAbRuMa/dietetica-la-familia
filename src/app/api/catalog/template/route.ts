@@ -11,7 +11,7 @@ export async function GET() {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition":
-        'attachment; filename="plantilla-catalogo-raiz-natural.csv"',
+        'attachment; filename="plantilla-catalogo-dietetica-la-familia.csv"',
       "Cache-Control": "no-store",
     },
   });

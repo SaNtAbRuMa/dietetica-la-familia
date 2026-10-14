@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = (
-    siteConfig.url || "https://raiznatural.com.ar"
+    siteConfig.url || "https://dietetica-la-familia.vercel.app"
   ).replace(/\/+$/, "");
 
   const products = await catalog.listProducts();

@@ -13,6 +13,7 @@ import { Quantity } from "@/components/quantity";
 import { useCart } from "@/features/cart/provider";
 import type { Product } from "@/types/catalog";
 import { formatCurrency } from "@/lib/format-currency";
+import { siteConfig } from "@/config/site";
 export function ProductDetail({
   product,
   category,
@@ -163,7 +164,7 @@ export function ProductDetail({
           </p>
         )}
         <p className="delivery-note">
-          <PackageCheck size={20} /> Envío gratis desde $ 20.000 · Retiro en
+          <PackageCheck size={20} /> Envío gratis desde {formatCurrency(siteConfig.freeShippingThreshold)} · Retiro en
           Urquiza 1315 o Rivadavia 2581.
         </p>
         <Accordion defaultValue={["ingredientes"]}>

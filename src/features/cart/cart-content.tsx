@@ -8,6 +8,7 @@ import { useCart, useCatalog } from "./provider";
 import { resolveCart, cartSubtotal } from "./logic";
 import { formatCurrency } from "@/lib/format-currency";
 import { productImage } from "@/config/imagery";
+import { siteConfig } from "@/config/site";
 
 export function CartContent({ drawer = false }: { drawer?: boolean }) {
   const cart = useCart((s) => s);
@@ -106,7 +107,7 @@ export function CartContent({ drawer = false }: { drawer?: boolean }) {
           <strong>{formatCurrency(cartSubtotal(lines))}</strong>
         </div>
         <p className="muted">
-          Envío gratis desde $ 20.000 o retiro sin cargo en sucursales de Olavarría.
+          Envío gratis desde {formatCurrency(siteConfig.freeShippingThreshold)} o retiro sin cargo en sucursales de Olavarría.
         </p>
         {cart.storageError && (
           <p role="alert">

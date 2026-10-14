@@ -3,7 +3,10 @@ import { createStore } from "zustand/vanilla";
 import type { Product } from "@/types/catalog";
 import type { CartLine } from "./types";
 import { sanitizeCart } from "./logic";
-export const CART_KEY = "raiz-natural:cart:v1";
+
+export const CART_KEY = "dietetica-la-familia:cart:v1";
+export const LEGACY_CART_KEY = "raiz-natural:cart:v1";
+
 type CartState = {
   lines: CartLine[];
   hydrated: boolean;

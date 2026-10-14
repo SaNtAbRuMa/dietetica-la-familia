@@ -553,8 +553,8 @@ export function CheckoutForm() {
                   Envío a domicilio
                   <small>
                     {qualifiesForFreeDelivery
-                      ? "¡Envío gratis aplicado! (compra ≥ $ 20.000)"
-                      : "Envío sin cargo desde $ 20.000 en Olavarría"}
+                      ? `¡Envío gratis aplicado! (compra ≥ ${formatCurrency(siteConfig.freeShippingThreshold)})`
+                      : `Envío sin cargo desde ${formatCurrency(siteConfig.freeShippingThreshold)} en Olavarría`}
                   </small>
                 </span>
               </label>
@@ -994,7 +994,7 @@ export function CheckoutForm() {
             {delivery === "store_pickup"
               ? "Sin cargo (retiro en sucursal)"
               : qualifiesForFreeDelivery
-                ? "Sin cargo (compra ≥ $ 20.000)"
+                ? `Sin cargo (compra ≥ ${formatCurrency(siteConfig.freeShippingThreshold)})`
                 : `A coordinar (gratis desde ${formatCurrency(siteConfig.freeShippingThreshold)})`}
           </span>
         </div>

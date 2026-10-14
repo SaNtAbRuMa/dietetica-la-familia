@@ -39,7 +39,9 @@ export const siteConfig = {
   instagramHandle: "dietetica.lafamilia",
   instagramUrl: "https://www.instagram.com/dietetica.lafamilia/",
   freeShippingThreshold: 20000,
-  // Set only when a real public domain exists. Never invent a canonical URL.
-  url: process.env.NEXT_PUBLIC_SITE_URL || "",
+  // Set to real production domain as default. Can be overridden by NEXT_PUBLIC_SITE_URL.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://dietetica-la-familia.vercel.app",
   commerceEnabled: true,
 } as const;

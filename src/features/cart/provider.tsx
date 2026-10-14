@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useStore } from "zustand";
 import type { Product } from "@/types/catalog";
-import { createCartStore, CART_KEY } from "./store";
+import { createCartStore, CART_KEY, LEGACY_CART_KEY } from "./store";
 type Store = ReturnType<typeof createCartStore>;
 const Context = createContext<Store | null>(null);
 const ProductsContext = createContext<readonly Product[]>([]);
@@ -23,9 +23,11 @@ export function CartProvider({
   useEffect(() => {
     const hydrate = () => {
       try {
-        const value: unknown = JSON.parse(
-          localStorage.getItem(CART_KEY) ?? "null",
-        );
+        const raw =
+          localStorage.getItem(CART_KEY) ??
+          localStorage.getItem(LEGACY_CART_KEY) ??
+          "null";
+        const value: unknown = JSON.parse(raw);
         store
           .getState()
           .hydrate(
@@ -43,7 +45,12 @@ export function CartProvider({
     };
     hydrate();
     const sync = (event: StorageEvent) => {
-      if (event.key === CART_KEY || event.key === null) hydrate();
+      if (
+        event.key === CART_KEY ||
+        event.key === LEGACY_CART_KEY ||
+        event.key === null
+      )
+        hydrate();
     };
     window.addEventListener("storage", sync);
     return () => window.removeEventListener("storage", sync);

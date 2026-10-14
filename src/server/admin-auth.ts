@@ -3,7 +3,8 @@ import crypto from "node:crypto";
 import { cookies } from "next/headers";
 
 const ADMIN_COOKIE_NAME = "rn_admin_session";
-const DEFAULT_DEV_PASSWORD = "raiznatural2026";
+const DEFAULT_DEV_PASSWORD = "lafamilia2026";
+const LEGACY_DEV_PASSWORD = "raiznatural2026";
 
 function getAdminPassword(): string {
   return process.env.ADMIN_PASSWORD?.trim() || DEFAULT_DEV_PASSWORD;
@@ -63,11 +64,15 @@ export function verifyAdminSessionToken(
 }
 
 export function verifyAdminPassword(candidate: string): boolean {
-  const expected = getAdminPassword();
-  const a = Buffer.from(candidate.trim(), "utf8");
-  const b = Buffer.from(expected, "utf8");
-  if (a.length !== b.length) return false;
-  return crypto.timingSafeEqual(a, b);
+  const custom = process.env.ADMIN_PASSWORD?.trim();
+  const trimmed = candidate.trim();
+  if (custom) {
+    const a = Buffer.from(trimmed, "utf8");
+    const b = Buffer.from(custom, "utf8");
+    if (a.length !== b.length) return false;
+    return crypto.timingSafeEqual(a, b);
+  }
+  return trimmed === DEFAULT_DEV_PASSWORD || trimmed === LEGACY_DEV_PASSWORD;
 }
 
 export async function isAdminAuthenticated(): Promise<boolean> {

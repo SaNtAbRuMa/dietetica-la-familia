@@ -86,7 +86,7 @@ export function AdminLoginForm({ isDefaultPassword }: Props) {
               size={14}
               style={{ display: "inline", verticalAlign: "middle" }}
             />{" "}
-            Clave local por defecto: <code>raiznatural2026</code> (configurá{" "}
+            Clave local por defecto: <code>lafamilia2026</code> (configurá{" "}
             <code>ADMIN_PASSWORD</code> en <code>.env.local</code> para
             producción).
           </p>
