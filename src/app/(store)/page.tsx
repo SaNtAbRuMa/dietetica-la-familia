@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site";
 import { FeaturedSubsections } from "@/components/home/featured-subsections";
 import { BottomSocialStrip } from "@/components/home/bottom-social-strip";
 import { SucursalesSection } from "@/components/home/sucursales-section";
+import { formatCurrency } from "@/lib/format-currency";
 
 export default async function Home() {
   const [products, categories] = await Promise.all([
@@ -85,7 +86,7 @@ export default async function Home() {
               <CheckCircle2 size={15} /> Horario corrido
             </span>
             <span className="hero-badge-item">
-              <CheckCircle2 size={15} /> Envío gratis desde $ 20.000
+              <CheckCircle2 size={15} /> Envío gratis desde {formatCurrency(siteConfig.freeShippingThreshold)}
             </span>
             <span className="hero-badge-item">
               <CheckCircle2 size={15} /> Retiro sin cargo
@@ -204,7 +205,7 @@ export default async function Home() {
           {
             Icon: PackageCheck,
             title: "Envío o retiro en sucursal",
-            text: "Envío a domicilio gratis desde $ 20.000 o retiro sin cargo en Urquiza 1315 y Rivadavia 2581.",
+            text: `Envío a domicilio gratis desde ${formatCurrency(siteConfig.freeShippingThreshold)} o retiro sin cargo en Urquiza 1315 y Rivadavia 2581.`,
           },
         ].map(({ Icon, title, text }) => (
           <div key={title}>

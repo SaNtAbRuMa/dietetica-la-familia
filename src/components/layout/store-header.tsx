@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, Search, ShoppingBag, ArrowRight, MapPin, Clock, Truck } from "lucide-react";
+import { Menu, Search, ShoppingBag, ArrowRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -17,7 +17,6 @@ import { Input } from "@/components/ui/input";
 import { useCart } from "@/features/cart/provider";
 import { CartContent } from "@/features/cart/cart-content";
 import { siteConfig } from "@/config/site";
-import { formatCurrency } from "@/lib/format-currency";
 
 export function StoreHeader() {
   const pathname = usePathname();
@@ -40,40 +39,7 @@ export function StoreHeader() {
   }, [pathname, setCartOpen]);
 
   return (
-    <>
-      <div className="announcement">
-        <span className="announcement-item">
-          <MapPin size={13} className="inline mr-1" style={{ color: "var(--store-lime-dark)" }} />
-          <strong>Olavarría:</strong> Sucursal Centro (Rivadavia 2581) y Urquiza 1315
-        </span>
-        <span className="announcement-divider" aria-hidden="true">·</span>
-        <span className="announcement-item">
-          <Clock size={13} className="inline mr-1" style={{ color: "var(--store-lime-dark)" }} />
-          {siteConfig.hours}
-        </span>
-        <span className="announcement-divider" aria-hidden="true">·</span>
-        <span className="announcement-item">
-          <Truck size={13} className="inline mr-1" style={{ color: "var(--store-lime-dark)" }} />
-          Envío gratis en compras desde {formatCurrency(siteConfig.freeShippingThreshold)}
-        </span>
-        <span className="announcement-divider" aria-hidden="true">·</span>
-        <a
-          href={siteConfig.whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="announcement-wa"
-        >
-          <Image
-            src="/images/whatsapp-official.svg"
-            alt=""
-            width={14}
-            height={14}
-            className="inline mr-1 align-text-bottom"
-          />
-          WhatsApp {siteConfig.whatsappDisplay}
-        </a>
-      </div>
-      <header className="store-header">
+    <header className="store-header">
         <div className="container header-inner">
           <Sheet open={menu} onOpenChange={setMenu}>
             <SheetTrigger
@@ -191,6 +157,24 @@ export function StoreHeader() {
             <Link href="/nosotros">Nosotros</Link>
           </nav>
           <div className="header-actions">
+            {/* Mini botón oficial de WhatsApp */}
+            <a
+              href={siteConfig.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="header-mini-wa"
+              aria-label="Contactar por WhatsApp"
+              title={`WhatsApp oficial ${siteConfig.whatsappDisplay}`}
+            >
+              <Image
+                src="/images/whatsapp-official.svg"
+                alt="WhatsApp"
+                width={17}
+                height={17}
+                className="header-mini-wa-icon"
+              />
+            </a>
+
             <Sheet open={search} onOpenChange={setSearch}>
               <SheetTrigger
                 render={
@@ -278,6 +262,5 @@ export function StoreHeader() {
           </div>
         </div>
       </header>
-    </>
   );
 }
