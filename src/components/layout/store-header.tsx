@@ -40,19 +40,145 @@ export function StoreHeader() {
 
   return (
     <header className="store-header">
-        <div className="container header-inner">
+      <div className="container header-inner">
+        {/* Fila 1: Marca principal + Nav en escritorio + Acciones */}
+        <div className="header-brand-row">
+          <Link
+            href="/"
+            className="brand brand-la-familia"
+            aria-label={`${siteConfig.name}, inicio`}
+          >
+            <Image
+              src="/images/logo-la-familia-real.png"
+              alt={siteConfig.name}
+              width={48}
+              height={48}
+              priority
+              className="brand-logo-img"
+            />
+            <div className="brand-text-block">
+              <span className="brand-title">{siteConfig.name}</span>
+              <span className="brand-subtitle">{siteConfig.subbrand}</span>
+            </div>
+          </Link>
+
+          <nav className="desktop-nav" aria-label="Navegación principal">
+            <Link href="/productos">Productos</Link>
+            <Link href="/#categorias">Categorías</Link>
+            <Link href="/#sucursales">
+              <MapPin size={14} style={{ color: "var(--store-lime)" }} className="inline mr-1" />
+              Sucursales
+            </Link>
+            <Link href="/nosotros">Nosotros</Link>
+          </nav>
+
+          <div className="header-actions">
+            {/* Buscador para escritorio */}
+            <Sheet open={search} onOpenChange={setSearch}>
+              <SheetTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="desktop-search-trigger"
+                    aria-label="Buscar productos"
+                  />
+                }
+              >
+                <Search />
+              </SheetTrigger>
+              <SheetContent className="store-sheet">
+                <SheetHeader>
+                  <SheetTitle>¿Qué estás buscando?</SheetTitle>
+                  <SheetDescription>
+                    Buscá frutos secos, harinas, repostería, opciones sin TACC…
+                  </SheetDescription>
+                </SheetHeader>
+                <form
+                  action="/productos"
+                  className="search-form"
+                  onSubmit={() => setSearch(false)}
+                >
+                  <label htmlFor="header-search" className="sr-only">
+                    Buscar productos
+                  </label>
+                  <Input
+                    id="header-search"
+                    name="q"
+                    placeholder="Almendras, chocolate, granola, stevia…"
+                    maxLength={100}
+                    autoFocus
+                  />
+                  <Button type="submit" aria-label="Buscar">
+                    <ArrowRight />
+                  </Button>
+                </form>
+                <div className="search-suggestions">
+                  <p>Categorías populares en Olavarría</p>
+                  <div>
+                    {[
+                      ["Sin TACC", "/productos?categoria=galletitas-cereales-y-pan-sin-tacc"],
+                      ["Frutos secos", "/productos?categoria=frutos-secos"],
+                      ["Cereales y granolas", "/productos?categoria=cereales-y-granolas"],
+                      ["Repostería y Cotillón", "/productos?categoria=cotillon"],
+                      ["Endulzantes", "/productos?categoria=endulzantes"],
+                    ].map(([label, href]) => (
+                      <Link
+                        key={href}
+                        href={href!}
+                        onClick={() => setSearch(false)}
+                      >
+                        {label}
+                        <ArrowRight aria-hidden="true" size={15} />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+
+            {/* Canasto / Carrito de compras */}
+            <Sheet open={cart.open} onOpenChange={cart.setOpen}>
+              <SheetTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="cart-trigger"
+                    aria-label={`Carrito, ${count} productos`}
+                  />
+                }
+              >
+                <ShoppingBag />
+                {count > 0 && <span className="cart-count">{count}</span>}
+              </SheetTrigger>
+              <SheetContent className="store-sheet cart-sheet">
+                <SheetHeader>
+                  <SheetTitle>Tu canasto de compras</SheetTitle>
+                  <SheetDescription>
+                    Revisá tus productos antes de confirmar el pedido.
+                  </SheetDescription>
+                </SheetHeader>
+                <CartContent drawer />
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+
+        {/* Fila 2: Barra Móvil (Menú desplegable + Buscador amplio para celulares) */}
+        <div className="header-mobile-bar">
           <Sheet open={menu} onOpenChange={setMenu}>
             <SheetTrigger
               render={
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="mobile-menu"
-                  aria-label="Abrir menú"
+                <button
+                  type="button"
+                  className="mobile-bar-menu-btn"
+                  aria-label="Abrir menú y categorías"
                 />
               }
             >
-              <Menu />
+              <Menu size={18} />
+              <span>Menú</span>
             </SheetTrigger>
             <SheetContent side="left" className="store-sheet">
               <SheetHeader>
@@ -129,138 +255,19 @@ export function StoreHeader() {
               </div>
             </SheetContent>
           </Sheet>
-          <Link
-            href="/"
-            className="brand brand-la-familia"
-            aria-label={`${siteConfig.name}, inicio`}
-          >
-            <Image
-              src="/images/logo-la-familia-real.png"
-              alt={siteConfig.name}
-              width={48}
-              height={48}
-              priority
-              className="brand-logo-img"
-            />
-            <div className="brand-text-block">
-              <span className="brand-title">{siteConfig.name}</span>
-              <span className="brand-subtitle">{siteConfig.subbrand}</span>
-            </div>
-          </Link>
-          <nav className="desktop-nav" aria-label="Navegación principal">
-            <Link href="/productos">Productos</Link>
-            <Link href="/#categorias">Categorías</Link>
-            <Link href="/#sucursales">
-              <MapPin size={14} style={{ color: "var(--store-lime)" }} className="inline mr-1" />
-              Sucursales
-            </Link>
-            <Link href="/nosotros">Nosotros</Link>
-          </nav>
-          <div className="header-actions">
-            {/* Mini botón oficial de WhatsApp */}
-            <a
-              href={siteConfig.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="header-mini-wa"
-              aria-label="Contactar por WhatsApp"
-              title={`WhatsApp oficial ${siteConfig.whatsappDisplay}`}
-            >
-              <Image
-                src="/images/whatsapp-official.svg"
-                alt="WhatsApp"
-                width={17}
-                height={17}
-                className="header-mini-wa-icon"
-              />
-            </a>
 
-            <Sheet open={search} onOpenChange={setSearch}>
-              <SheetTrigger
-                render={
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    aria-label="Buscar productos"
-                  />
-                }
-              >
-                <Search />
-              </SheetTrigger>
-              <SheetContent className="store-sheet">
-                <SheetHeader>
-                  <SheetTitle>¿Qué estás buscando?</SheetTitle>
-                  <SheetDescription>
-                    Buscá frutos secos, harinas, repostería, opciones sin TACC…
-                  </SheetDescription>
-                </SheetHeader>
-                <form
-                  action="/productos"
-                  className="search-form"
-                  onSubmit={() => setSearch(false)}
-                >
-                  <label htmlFor="header-search" className="sr-only">
-                    Buscar productos
-                  </label>
-                  <Input
-                    id="header-search"
-                    name="q"
-                    placeholder="Almendras, chocolate, granola, stevia…"
-                    maxLength={100}
-                  />
-                  <Button type="submit" aria-label="Buscar">
-                    <ArrowRight />
-                  </Button>
-                </form>
-                <div className="search-suggestions">
-                  <p>Categorías populares en Olavarría</p>
-                  <div>
-                    {[
-                      ["Sin TACC", "/productos?categoria=galletitas-cereales-y-pan-sin-tacc"],
-                      ["Frutos secos", "/productos?categoria=frutos-secos"],
-                      ["Cereales y granolas", "/productos?categoria=cereales-y-granolas"],
-                      ["Repostería y Cotillón", "/productos?categoria=cotillon"],
-                      ["Endulzantes", "/productos?categoria=endulzantes"],
-                    ].map(([label, href]) => (
-                      <Link
-                        key={href}
-                        href={href!}
-                        onClick={() => setSearch(false)}
-                      >
-                        {label}
-                        <ArrowRight aria-hidden="true" size={15} />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-            <Sheet open={cart.open} onOpenChange={cart.setOpen}>
-              <SheetTrigger
-                render={
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="cart-trigger"
-                    aria-label={`Carrito, ${count} productos`}
-                  />
-                }
-              >
-                <ShoppingBag />
-                {count > 0 && <span className="cart-count">{count}</span>}
-              </SheetTrigger>
-              <SheetContent className="store-sheet cart-sheet">
-                <SheetHeader>
-                  <SheetTitle>Tu canasto de compras</SheetTitle>
-                  <SheetDescription>
-                    Revisá tus productos antes de confirmar el pedido.
-                  </SheetDescription>
-                </SheetHeader>
-                <CartContent drawer />
-              </SheetContent>
-            </Sheet>
-          </div>
+          {/* Botón barra de búsqueda móvil para abrir buscador con 1 toque */}
+          <button
+            type="button"
+            onClick={() => setSearch(true)}
+            className="mobile-bar-search-btn"
+            aria-label="Buscar productos en la dietética"
+          >
+            <Search size={16} className="mobile-search-icon" />
+            <span className="mobile-search-text">Buscar almendras, sin TACC…</span>
+          </button>
         </div>
-      </header>
+      </div>
+    </header>
   );
 }

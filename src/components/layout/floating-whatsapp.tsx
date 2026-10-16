@@ -12,17 +12,20 @@ export function FloatingWhatsApp() {
         className="floating-wa-btn"
         aria-label={`Enviar mensaje de WhatsApp a ${siteConfig.name}`}
       >
-        <span className="floating-wa-pulse" aria-hidden="true" />
-        <Image
-          src="/images/whatsapp-official.svg"
-          alt="WhatsApp Oficial"
-          width={36}
-          height={36}
-          className="floating-wa-icon"
-        />
-        <span className="floating-wa-tooltip">
-          ¿Dudas? Chateá con nosotros
+        <span className="floating-wa-bubble">
+          <span className="floating-wa-dot" aria-hidden="true" />
+          ¿Dudas? Escribinos
         </span>
+        <div className="floating-wa-circle">
+          <span className="floating-wa-pulse" aria-hidden="true" />
+          <Image
+            src="/images/whatsapp-official.svg"
+            alt="WhatsApp Oficial"
+            width={26}
+            height={26}
+            className="floating-wa-icon"
+          />
+        </div>
       </a>
     </aside>
   );

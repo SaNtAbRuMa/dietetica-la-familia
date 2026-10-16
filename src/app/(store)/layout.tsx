@@ -3,6 +3,7 @@ import { catalog } from "@/server/catalog";
 import { CartProvider } from "@/features/cart/provider";
 import { StoreHeader } from "@/components/layout/store-header";
 import { StoreFooter } from "@/components/layout/store-footer";
+import { FloatingWhatsApp } from "@/components/layout/floating-whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -46,6 +47,7 @@ export default async function StoreLayout({
         {children}
       </main>
       <StoreFooter />
+      <FloatingWhatsApp />
     </CartProvider>
   );
 }

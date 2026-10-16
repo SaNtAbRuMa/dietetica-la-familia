@@ -156,11 +156,71 @@ svg {
   -webkit-backdrop-filter: blur(8px);
 }
 .header-inner {
+  display: flex;
+  flex-direction: column;
+}
+.header-brand-row {
   min-height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  width: 100%;
+}
+.header-mobile-bar {
+  display: none;
+}
+.mobile-bar-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--store-line);
+  background: #ffffff;
+  color: var(--store-ink);
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.mobile-bar-menu-btn:hover,
+.mobile-bar-menu-btn:active {
+  background: #f7f6ef;
+  border-color: #c9c7ba;
+}
+.mobile-bar-search-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  flex: 1;
+  min-width: 0;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--store-line);
+  background: #ffffff;
+  color: var(--store-muted);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.mobile-bar-search-btn:hover,
+.mobile-bar-search-btn:active {
+  border-color: var(--store-green);
+  color: var(--store-ink);
+}
+.mobile-search-icon {
+  color: var(--store-lime-dark);
+  flex-shrink: 0;
+}
+.mobile-search-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .brand {
   display: flex;
@@ -1501,16 +1561,29 @@ svg {
 }
 @media (max-width: 850px) {
   .desktop-nav {
-    display: none;
+    display: none !important;
   }
-  .mobile-menu {
-    display: inline-flex !important;
+  .desktop-search-trigger {
+    display: none !important;
   }
   .header-inner {
-    justify-content: initial;
+    min-height: auto;
+    padding-block: 8px 10px;
+    gap: 8px;
   }
-  .header-actions {
-    margin-left: auto;
+  .header-brand-row {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+  }
+  .header-mobile-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
   }
   .hero h1 {
     font-size: 43px;
@@ -1631,62 +1704,66 @@ svg {
     width: calc(100% - 28px);
   }
   .header-inner {
-    min-height: 58px;
+    min-height: auto;
+    padding-block: 8px 10px;
     gap: 8px;
   }
-  .mobile-menu {
-    width: 34px !important;
-    min-width: 34px !important;
-    height: 34px !important;
-    padding: 0 !important;
-    flex-shrink: 0;
+  .header-brand-row {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
   }
   .brand-la-familia {
-    gap: 8px;
+    gap: 10px;
     min-width: 0;
     flex: 1 1 auto;
-    overflow: hidden;
+    overflow: visible;
   }
   .brand-logo-img {
-    width: 35px;
-    height: 35px;
-    min-width: 35px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 8px;
   }
   .brand-text-block {
     min-width: 0;
-    overflow: hidden;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .brand-title {
-    font-size: 15.5px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 21px;
+    font-weight: 700;
     line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--store-ink);
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
+    text-overflow: clip;
   }
   .brand-subtitle {
-    font-size: 7.5px;
-    letter-spacing: 0.03em;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
     font-weight: 600;
-    margin-top: 1px;
+    text-transform: uppercase;
+    color: var(--store-lime-dark);
+    margin-top: 2px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.1;
-    opacity: 0.92;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.2;
+    opacity: 0.95;
   }
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     flex-shrink: 0;
-  }
-  .header-mini-wa {
-    width: 32px;
-    height: 32px;
-  }
-  .header-mini-wa-icon {
-    width: 16px;
-    height: 16px;
   }
   .header-actions [data-slot="button"],
   .header-actions [data-slot="sheet-trigger"][data-size^="icon"] {
@@ -2124,27 +2201,19 @@ svg {
     width: calc(100% - 20px);
   }
   .header-inner {
-    gap: 6px;
+    gap: 7px;
   }
   .brand-logo-img {
-    width: 31px;
-    height: 31px;
-    min-width: 31px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
   }
   .brand-title {
-    font-size: 14px;
+    font-size: 19px;
   }
   .brand-subtitle {
-    font-size: 6.8px;
-    letter-spacing: 0.01em;
-  }
-  .header-mini-wa {
-    width: 30px;
-    height: 30px;
-  }
-  .header-mini-wa-icon {
-    width: 15px;
-    height: 15px;
+    font-size: 9.5px;
+    letter-spacing: 0.03em;
   }
   .header-actions [data-slot="button"],
   .header-actions [data-slot="sheet-trigger"][data-size^="icon"] {
@@ -2468,11 +2537,9 @@ h2 {
 .brand-la-familia {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
-  min-width: 0;
-  flex: 1 1 auto;
-  overflow: hidden;
+  flex-shrink: 0;
 }
 .brand-logo-img {
   width: 42px;
@@ -2492,30 +2559,25 @@ h2 {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  overflow: hidden;
   line-height: 1.15;
   justify-content: center;
 }
 .brand-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--store-ink);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .brand-subtitle {
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--store-lime-dark);
-  margin-top: 1px;
+  margin-top: 2px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* Announcement Bar - Warm, light, clean */
@@ -2719,28 +2781,68 @@ h2 {
 /* Floating WhatsApp Button */
 .floating-wa-wrap {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 22px;
+  right: 20px;
   z-index: 99;
 }
 .floating-wa-btn {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+.floating-wa-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  color: #1a2e16;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 13px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(22, 101, 52, 0.15);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.floating-wa-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+  display: inline-block;
+  flex-shrink: 0;
+}
+.floating-wa-circle {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: #25d366;
   color: #ffffff;
-  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.45);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.45);
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
-  text-decoration: none;
+  flex-shrink: 0;
 }
-.floating-wa-btn:hover {
+.floating-wa-btn:hover .floating-wa-circle {
   transform: scale(1.08);
   box-shadow: 0 6px 22px rgba(37, 211, 102, 0.6);
-  color: #ffffff;
+}
+.floating-wa-btn:hover .floating-wa-bubble {
+  transform: translateX(-2px);
+  background: #f7fee7;
+  border-color: rgba(34, 197, 94, 0.4);
 }
 .floating-wa-pulse {
   position: absolute;
@@ -2765,26 +2867,24 @@ h2 {
     opacity: 0;
   }
 }
-.floating-wa-tooltip {
-  position: absolute;
-  right: calc(100% + 12px);
-  top: 50%;
-  transform: translateY(-50%);
-  background: #171b15;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 20px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.floating-wa-btn:hover .floating-wa-tooltip {
-  opacity: 1;
+@media (max-width: 480px) {
+  .floating-wa-wrap {
+    bottom: 16px;
+    right: 14px;
+  }
+  .floating-wa-bubble {
+    font-size: 11px;
+    padding: 5px 10px;
+    gap: 5px;
+  }
+  .floating-wa-circle {
+    width: 44px;
+    height: 44px;
+  }
+  .floating-wa-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
 }
 
 /* Featured Category Subsections (Sin TACC, Frutos Secos, Granolas) */
@@ -3259,13 +3359,6 @@ h2 {
   .floating-wa-wrap {
     bottom: 18px;
     right: 18px;
-  }
-  .floating-wa-btn {
-    width: 50px;
-    height: 50px;
-  }
-  .floating-wa-tooltip {
-    display: none;
   }
 }
 
